@@ -21,9 +21,9 @@ public class HomePage {
 
     @CacheLookup
     @FindBy(how = How.XPATH, using = "//input[@id='txtPassword']") WebElement passwordNew;
-    By username=By.xpath("//input[@id=\"txtUsername\"]");
-    By password=By.xpath("//input[@id=\"txtPassword\"]");
-    By loginButton=By.xpath("//input[@id=\"btnLogin\"]");
+    By username=By.xpath("//input[@name='username']");
+    By password=By.xpath("//input[@name='password']");
+    By loginButton=By.xpath("//button[@type='submit']");
     By socialMediaLinks=By.xpath("//div[@id='social-icons']//img");
 
     public DashboardPage loginToApplication(String uname,String pass)

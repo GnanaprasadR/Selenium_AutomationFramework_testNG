@@ -64,11 +64,8 @@ public class BrowserFactory {
 			//opt.addExtensions(new File("C:\\Users\\l\\Downloads\\selectorhub.crx"));
 
 			Proxy p = new Proxy();
-			//p.set
 			
 			p.setHttpProxy("http://129.123.90.0:5555");
-			// opt.setCapability("proxy", p);
-			// opt.setCapability(CapabilityType.PROXY,p);
 
 			Map<String, Object> preference = new HashMap<>();
 			preference.put("download.default_directory", "C:\\SeleniumDownload");
@@ -76,13 +73,15 @@ public class BrowserFactory {
 			opt.setExperimentalOption("excludeSwitches", Arrays.asList("disable-popup-blocking"));
 			opt.setAcceptInsecureCerts(true);
 
+			System.out.println("Chrome version: " + WebDriverManager.chromedriver().getBrowserPath());
 			WebDriverManager.chromedriver().setup();
 			driver = new ChromeDriver(opt);
 			
 			
 		} else if (browser.equalsIgnoreCase("ChromeHeadless")) {
 			ChromeOptions opt = new ChromeOptions();
-			opt.setHeadless(true);
+			//opt.setHeadless(true);
+			opt.addArguments("--headless=new");
 			//WebDriverManager.chromedriver().setup();
 			driver = new ChromeDriver(opt);
 

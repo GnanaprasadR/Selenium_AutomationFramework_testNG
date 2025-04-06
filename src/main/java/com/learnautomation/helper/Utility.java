@@ -40,6 +40,39 @@ public class Utility {
         sel.selectByIndex(indexToBeSelected);
     }
 
+    public static void selectCustomDropdownOption(WebDriver driver, By dropdownLocator, String optionText) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        // Click the dropdown to open it
+        WebElement dropdown = wait.until(ExpectedConditions.elementToBeClickable(dropdownLocator));
+        dropdown.click();
+
+        // Define locator for the list items (options) once dropdown is open
+        // Modify this XPath to match your app's option elements
+        //By optionsLocator = By.xpath("//div[@role='option']");
+        By optionsLocator = By.xpath("//div[@role='option' or contains(@class, 'oxd-select-option')]");
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(optionsLocator));
+
+        // 3. Retry logic to handle stale elements
+        List<WebElement> options = driver.findElements(optionsLocator);
+
+        for (int i = 0; i < 3; i++) { // Retry max 3 times
+            try {
+                for (WebElement option : options) {
+                    if (option.getText().trim().equalsIgnoreCase(optionText)) {
+                        option.click();
+                        return;
+                    }
+                }
+            } catch (StaleElementReferenceException e) {
+                // Re-fetch options in case the DOM changed
+                options = driver.findElements(optionsLocator);
+            }
+        }
+
+        throw new RuntimeException("Option with text '" + optionText + "' not found in dropdown.");
+    }
+
     public static WebElement waitForWebElement(WebDriver driver,By locator)
     {
         WebDriverWait wait=new WebDriverWait(driver, Duration.ofSeconds(20));

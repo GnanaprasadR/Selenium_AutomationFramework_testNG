@@ -15,7 +15,8 @@ public class DashboardPage {
     By allTabsMenu=By.xpath("//ul[@id='mainMenuFirstLevelUnorderedList']//b");
     By welcomeText=By.id("welcome");
     By logoutText=By.linkText("Logout");
-    By adminTab=By.xpath("//b[text()='Admin']");
+    //By adminTab=By.xpath("//b[text()='Admin']");
+    By adminTab=By.xpath("//span[text()='Admin']");
     public String getWelcomeText()
     {
         return driver.findElement(welcomeText).getText();
